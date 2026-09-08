@@ -1,16 +1,17 @@
 // Stats: "Auth" : '["0-Games", "1-Wins", "2-Draws", "3-Losses", "4-Winrate", "5-Goals", "6-Assists", "7-GK", "8-CS", "9-CS%", "10-Role", "11-Nick"]'
 
+export default function initBot(HBInit, { token, adminPassword: adminPasswordEnv } = {}) {
 /* VARIABLES */
 
 /* ROOM */
 
-const roomName = "⚽ Futsal da Base";
+const roomName = "⚽⚽⚽ Futsal da Base";
 const botName = "Carlo Ancelotti";
 const maxPlayers = 12;
 const roomPublic = true;
 const geo = [{"lat":-9.7525,"lon":-36.66111,"code":"br"}, {"code": "FR", "lat": 46.2, "lon": 2.2}, {"code": "PL", "lat": 51.9, "lon": 19.1}, {"code": "GB", "lat": 55.3, "lon": -3.4}, {"code": "PT", "lat": 39.3, "lon": -8.2}];
 
-const room = HBInit({ roomName: roomName, maxPlayers: maxPlayers, public: roomPublic, playerName: botName, geo: geo[0] });
+const room = HBInit({ roomName: roomName, maxPlayers: maxPlayers, public: roomPublic, playerName: botName, geo: geo[0], token: token });
 
 const scoreLimitClassic = 3;
 const scoreLimitBig = 3;
@@ -143,7 +144,7 @@ function parseUniform(uniformStr) {
 
 function applyUniform(team, uniformStr) {
 	var parsed = parseUniform(uniformStr);
-	room.setTeamColors(team, parsed.angle, parsed.colors);
+	// room.setTeamColors(team, parsed.angle, parsed.colors);
 }
 
 function getRandomUniform(excludeList) {
@@ -1191,7 +1192,7 @@ room.onPlayerChat = function (player, message) {
             }
             colors.push(Number.parseInt(colorHexes[i], 16));
         }
-        room.setTeamColors(player.team, angle, colors);
+        // room.setTeamColors(player.team, angle, colors);
         room.sendChat((player.team == Team.RED ? "🔴" : "🔵") + " " + player.name + " alterou as cores do time!");
         return false;
     }
@@ -1482,4 +1483,6 @@ room.onGameTick = function() {
 	getLastTouchOfTheBall();
 	getStats();
 	handleInactivity();
+}
+
 }
